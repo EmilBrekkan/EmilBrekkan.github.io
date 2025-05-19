@@ -9,7 +9,7 @@
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    })(window,document,'script','dataLayer','GTM-N22SSCG2');</script>
     <!-- End Google Tag Manager -->
     <style>
         * {
@@ -49,6 +49,7 @@
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
         p {
@@ -62,11 +63,69 @@
             padding: 1rem;
             color: #666;
         }
+
+        .contact-button {
+            display: inline-block;
+            background-color: #2c3e50;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 20px 0;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            width: auto;
+            min-width: 150px;
+        }
+
+        .contact-button:hover {
+            background-color: #34495e;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .contact-form {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .contact-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
     </style>
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N22SSCG2"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
@@ -81,6 +140,25 @@
             <h2>Om mig</h2>
             <p>Hej! Jag är en webbutvecklare som älskar att skapa snygga och funktionella webbplatser.</p>
             <p>Denna sida är hostad med GitHub Pages.</p>
+            <button type="button" class="contact-button" id="contactButton">Kontakta mig</button>
+            
+            <div class="contact-form" id="contactForm">
+                <form id="contactFormElement">
+                    <div class="form-group">
+                        <label for="name">Namn:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-post:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Meddelande:</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="contact-button">Skicka</button>
+                </form>
+            </div>
         </div>
     </main>
 
@@ -89,5 +167,37 @@
             <p>&copy; 2024 Min Hemsida. Alla rättigheter förbehållna.</p>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('contactButton').addEventListener('click', function() {
+            const form = document.getElementById('contactForm');
+            form.classList.toggle('active');
+            
+            // Push to dataLayer for GTM
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'contact_form_toggle',
+                'form_state': form.classList.contains('active') ? 'opened' : 'closed'
+            });
+        });
+
+        document.getElementById('contactFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Push to dataLayer for GTM
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'contact_form_submit',
+                'form_data': {
+                    'name': document.getElementById('name').value,
+                    'email': document.getElementById('email').value
+                }
+            });
+
+            // Reset form
+            this.reset();
+            document.getElementById('contactForm').classList.remove('active');
+        });
+    </script>
 </body>
 </html> 
